@@ -1,4 +1,6 @@
 const fs = require('fs');
+const http = require('http');
+const url = require('url');
 
 // Function to handle incoming requests
 function handleRequest(request, response) {
@@ -7,11 +9,11 @@ function handleRequest(request, response) {
     ip: request.headers['x-forwarded-for'] || request.connection.remoteAddress,
     userAgent: request.headers['user-agent'],
     timestamp: new Date().toISOString(),
-    url: request.url, // Track the requested URL
+    url: request.url,
   };
 
   // Save the user's information to a file
-  fs.appendFile('C:\\Users\\olive\\OneDrive\\Skrivbord\\users_data.txt', JSON.stringify(userInfo) + '\n', (err) => {
+  fs.appendFile("C:\Users\olive\OneDrive\Skrivbord\users data.txt", JSON.stringify(userInfo) + '\n', (err) => {
     if (err) {
       console.error('Error writing to file:', err);
     } else {
@@ -25,11 +27,9 @@ function handleRequest(request, response) {
 }
 
 // Start the server
-const http = require('http');
 const server = http.createServer(handleRequest);
-const port = 3000; // Replace with your desired port number
-const hostname = '127.0.0.1'; // Replace with your desired hostname
+const port = 3000;
 
-server.listen(port, hostname, () => {
-  console.log(`Server is running and listening on http://${hostname}:${port}`);
+server.listen(port, () => {
+  console.log(`Server is running and listening on port ${port}`);
 });
